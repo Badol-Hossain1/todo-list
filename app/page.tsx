@@ -2,11 +2,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import Read from "./(components)/read";
 import { useState } from "react";
-import { useGetTodoQuery } from "./(components)/test/text";
+
 import { useGetItemsQuery } from "./services/contactsApi";
 
 export default function Home() {
-  const { data } = useGetItemsQuery();
+  const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
   console.log("🚀 ~ Home ~ data:", data);
   const [form, setFrom] = useState({
     title: "",
@@ -15,26 +15,23 @@ export default function Home() {
 
   return (
     <main className="">
-      {/* <form onSubmit={onSubmit} action="">
-        <input
-          className="border"
-          name="title"
-          value={form.title}
-          onChange={onChangeHandler}
-          type="text"
-        />
-        <input
-          className="border"
-          name="dec"
-          value={form.dec}
-          onChange={onChangeHandler}
-          type="text"
-        />
-        <button type="submit" className="">
-          add me
-        </button>
-      </form> */}
-      <Read />
+      <h1 className="text-center text-4xl font-bold">Todo list</h1>
+      {isLoading && (
+        <h1 className="text-center text-4xl font-bold">...Loading</h1>
+      )}
+      {isFetching && (
+        <h2 className="text-center text-4xl font-bold">...Fetching</h2>
+      )}
+      {error && (
+        <h2 className="text-center text-4xl font-bold">something went wrong</h2>
+      )}
+      {isSuccess && (
+        <div className="grid grid-cols-4 gap-3">
+          {data.map((item) => (
+            <Read key={item.id} data={item} />
+          ))}
+        </div>
+      )}
     </main>
   );
 }
