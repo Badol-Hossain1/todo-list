@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Read from "./(components)/read";
 import { useState } from "react";
 
-import { useGetItemsQuery } from "./services/contactsApi";
+import { useGetItemsQuery, useItemQuery } from "./services/contactsApi";
+import AddItem from "./(components)/addItem";
 
 export default function Home() {
   const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
@@ -25,13 +26,27 @@ export default function Home() {
       {error && (
         <h2 className="text-center text-4xl font-bold">something went wrong</h2>
       )}
+
+      <AddItem />
       {isSuccess && (
-        <div className="grid grid-cols-4 gap-3">
-          {data.map((item) => (
-            <Read key={item.id} data={item} />
-          ))}
+        <div className="container mx-auto grid grid-cols-4 gap-3">
+          {data.map((item) => {
+            return (
+              <div key={item.id}>
+                <Read key={item.id} data={item} />
+                {/* <span>
+                  <ItemDetail key={item.id} id={item.id} />
+                </span> */}
+              </div>
+            );
+          })}
         </div>
       )}
     </main>
   );
 }
+
+export const ItemDetail = ({ id }: { id: string }) => {
+  const { data } = useItemQuery(id);
+  return <pre>{JSON.stringify(data, undefined, 2)}</pre>;
+};
