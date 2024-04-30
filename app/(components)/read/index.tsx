@@ -5,13 +5,17 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useDeleteItemMutation } from "@/app/services/contactsApi";
+import {
+  useDeleteItemMutation,
+  useUpdateItemMutation,
+} from "@/app/services/contactsApi";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Items } from "@/app/models/contact.model";
 
 const bull = (
   <Box
@@ -24,7 +28,16 @@ const bull = (
 
 const Read = ({ data }: any) => {
   const [deleteItem] = useDeleteItemMutation();
+  const [updateItem] = useUpdateItemMutation();
   const [open, setOpen] = React.useState(false);
+  const [items, setItems] = React.useState<Items>(data);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setItems({ ...items, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,32 +83,38 @@ const Read = ({ data }: any) => {
         >
           <DialogTitle>Update</DialogTitle>
           <DialogContent>
-            <TextField
-              autoFocus
-              className="w-full"
-              value={data.title}
-              id="name"
-              placeholder="title"
-              name="title"
-              type="text"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              className="w-full"
-              value={data.title}
-              id="name"
-              placeholder="doc"
-              name="doc"
-              type="text"
-              fullWidth
-              variant="standard"
-            />
+            <form onSubmit={handleSubmit}>
+              <TextField
+                autoFocus
+                className="w-full"
+                value={items?.title}
+                id="name"
+                placeholder="title"
+                name="title"
+                type="text"
+                onChange={handleChange}
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                className="w-full"
+                value={items?.doc}
+                id="name"
+                onChange={handleChange}
+                placeholder="doc"
+                name="doc"
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </form>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Update</Button>
+            <Button onClick={() => updateItem(items)} type="submit">
+              Update
+            </Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

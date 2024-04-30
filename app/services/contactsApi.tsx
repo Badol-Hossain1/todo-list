@@ -29,13 +29,14 @@ export const contactsApi = createApi({
         method: "PUT",
         body: rest,
       }),
+      invalidatesTags: ["Item"],
     }),
     deleteItem: builder.mutation<void, string>({
       query: (id) => ({
         url: `/Crud/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags:['Item']
+      invalidatesTags: ["Item"],
     }),
   }),
 });

@@ -34,9 +34,6 @@ export default function Home() {
             return (
               <div key={item.id}>
                 <Read key={item.id} data={item} />
-                {/* <span>
-                  <ItemDetail key={item.id} id={item.id} />
-                </span> */}
               </div>
             );
           })}
@@ -45,8 +42,3 @@ export default function Home() {
     </main>
   );
 }
-
-export const ItemDetail = ({ id }: { id: string }) => {
-  const { data } = useItemQuery(id);
-  return <pre>{JSON.stringify(data, undefined, 2)}</pre>;
-};

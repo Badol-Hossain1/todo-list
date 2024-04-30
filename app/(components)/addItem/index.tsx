@@ -7,13 +7,11 @@ import { Items } from "@/app/models/contact.model";
 import {
   useAddItemMutation,
   useGetItemsQuery,
-
 } from "@/app/services/contactsApi";
-
 
 const AddItem = () => {
   const [items, setItems] = useState<Items>(Object);
-  const { refetch } = useGetItemsQuery();
+  //   const { refetch } = useGetItemsQuery();
 
   const [addItem] = useAddItemMutation();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +19,7 @@ const AddItem = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    refetch();
+    // refetch();
     await addItem(items);
   };
 
