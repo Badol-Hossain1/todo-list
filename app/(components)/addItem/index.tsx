@@ -30,10 +30,13 @@ const initialValues: AddItemModal = {
   description: "",
 };
 const SignupSchema = Yup.object().shape({
-  title: Yup.string()
-    .min(2, "Too Short!")
-    .max(70, "Too Long!")
-    .required("Required"),
+  title: Yup.string().min(2, "Too Short!").max(70, "Too Long!").required(),
+  category: Yup.string().min(3, "Too Short!").max(20, "Too Long!").required(),
+  description: Yup.string()
+    .min(10, "Too Short!")
+
+    .required(),
+  price: Yup.number().required(),
 });
 
 const AddItem = () => {
@@ -50,29 +53,6 @@ const AddItem = () => {
   };
 
   const [addItem] = useAddItemMutation();
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setItem({ ...item, [e.target.name]: e.target.value });
-  // };
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   // refetch();
-  //   await addItem(item);
-  //   setItem({
-  //     title: "",
-  //     doc: "",
-  //     id: "",
-  //   });
-  //   toast("This is a sonner toast");
-  // };
-
-  // const { values, handleBlur, handleChange, handleSubmit, handleReset } =
-  //   useFormik({
-  //     initialValues: initialValues,
-  //     onSubmit: (values) => {
-  //       console.log("🚀 ~ AddItem ~ values:", values);
-  //     },
-  //   });
 
   return (
     <div className=" container mx-auto">
@@ -111,6 +91,8 @@ const AddItem = () => {
               >
                 Add item
               </Button>
+
+             
               <Dialog
                 open={open}
                 onClose={handleClose}
@@ -128,12 +110,13 @@ const AddItem = () => {
                   },
                 }}
               >
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>create </DialogTitle>
+                <DialogContentText className="px-6">
+                  This form will help you create your to-do list items. Rest
+                  assured, you{"'"}ll have the flexibility to edit or delete
+                  them later as needed.{" "}
+                </DialogContentText>
                 <DialogContent>
-                  <DialogContentText>
-                    To subscribe to this website, please enter your email
-                    address here. We will send updates occasionally.
-                  </DialogContentText>
                   <TextField
                     autoFocus
                     onChange={handleChange}
@@ -164,6 +147,9 @@ const AddItem = () => {
                     fullWidth
                     variant="standard"
                   />{" "}
+                  {errors.description && errors.description ? (
+                    <div>{errors.description}</div>
+                  ) : null}
                   <TextField
                     autoFocus
                     required
@@ -178,6 +164,9 @@ const AddItem = () => {
                     fullWidth
                     variant="standard"
                   />
+                  {errors.category && errors.category ? (
+                    <div>{errors.category}</div>
+                  ) : null}
                   <TextField
                     autoFocus
                     required
@@ -192,6 +181,9 @@ const AddItem = () => {
                     fullWidth
                     variant="standard"
                   />{" "}
+                  {errors.price && errors.price ? (
+                    <div>{errors.price}</div>
+                  ) : null}
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>

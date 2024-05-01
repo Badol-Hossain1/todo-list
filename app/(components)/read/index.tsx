@@ -35,7 +35,6 @@ const Read = ({ data }: any) => {
   const [updateItem] = useUpdateItemMutation();
   const [open, setOpen] = React.useState(false);
   const [items, setItems] = React.useState<AddItemModal>(data);
-  console.log("🚀 ~ Read ~ items:", items);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItems({ ...items, [e.target.name]: e.target.value });
@@ -50,8 +49,6 @@ const Read = ({ data }: any) => {
   };
   return (
     <>
-   
-
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
@@ -71,9 +68,19 @@ const Read = ({ data }: any) => {
           </Typography>
           <span className="uppercase"> {data?.category}</span>
 
-          <Typography className="pt-2" variant="body2" color="text.secondary">
-            {data?.description}
-          </Typography>
+          {data?.description && data.description.length > 100 ? (
+            <Typography
+              className="pt-2 h-[200px] overflow-y-scroll scrollbar-hide"
+              variant="body2"
+              color="text.secondary"
+            >
+              {data.description}
+            </Typography>
+          ) : (
+            <Typography className="pt-2" variant="body2" color="text.secondary">
+              {data.description}
+            </Typography>
+          )}
         </CardContent>
         <CardActions className="flex justify-between">
           <Button onClick={handleClickOpen} size="small">
@@ -124,7 +131,7 @@ const Read = ({ data }: any) => {
               name="description"
               type="text"
               fullWidth
-              variant="filled"
+              variant="standard"
               maxRows={4}
             />
             category
