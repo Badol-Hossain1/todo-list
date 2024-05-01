@@ -24,16 +24,10 @@ export default function Home() {
     ? data?.filter((item) => item.category === selectedCategory)
     : data;
 
-  const handleSearch = () => {
-    return data?.filter((item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  };
-
   return (
-    <main className="container mx-auto">
+    <main className=" w-full mt-12 container  xl:w-full mx-auto">
       <Toaster richColors />
-      <h1 className="text-center text-4xl font-bold">Todo list</h1>
+
       {isLoading && (
         <h1 className="text-center text-4xl font-bold">...Loading</h1>
       )}
@@ -47,9 +41,9 @@ export default function Home() {
       <AddItem />
       <br />
 
-      <div className="md:flex  gap-4 items-center">
+      <div className="flex justify-around w-full container mx-auto gap-4 md:items-center">
         <select
-          className="border px-4 py-3"
+          className="border md:px-4 text-xs md:py-3"
           value={selectedCategory}
           onChange={handleCategoryChange}
         >
@@ -65,7 +59,6 @@ export default function Home() {
         </select>
         <TextField
           autoFocus
-          className="w-full"
           id="name"
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search Here"
@@ -73,11 +66,18 @@ export default function Home() {
           type="text"
           fullWidth
           variant="standard"
+          InputProps={{
+            endAdornment: (
+              <PersonSearchIcon
+                style={{ marginLeft: "-35px", marginRight: "5px" }}
+              />
+            ),
+          }}
         />
       </div>
 
       {isSuccess && (
-        <div className="container mt-6 mx-auto grid md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="container mt-6 mx-auto grid md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredData &&
             filteredData
               .filter((item) => {

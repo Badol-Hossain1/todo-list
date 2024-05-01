@@ -12,9 +12,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import * as Yup from "yup";
+
 import { toast } from "sonner";
 import axios from "axios";
+import { TodoSchema } from "../schemas";
+import Image from "next/image";
 
 const initialValues: AddItemModal = {
   title: "",
@@ -23,15 +25,6 @@ const initialValues: AddItemModal = {
   description: "",
   image: "",
 };
-const TodoSchema = Yup.object().shape({
-  title: Yup.string().min(2, "Too Short!").max(70, "Too Long!").required(),
-  category: Yup.string().min(3, "Too Short!").max(20, "Too Long!").required(),
-  description: Yup.string()
-    .min(10, "Too Short!")
-
-    .required(),
-  price: Yup.number().required(),
-});
 
 const AddItem = () => {
   const [open, setOpen] = React.useState(false);
@@ -47,7 +40,7 @@ const AddItem = () => {
   const [addItem] = useAddItemMutation();
 
   return (
-    <div className=" container mx-auto">
+    <div className="w-full">
       <Formik
         initialValues={initialValues}
         validationSchema={TodoSchema}
@@ -65,7 +58,7 @@ const AddItem = () => {
               `https://api.cloudinary.com/v1_1/dgwwyemfa/image/upload`,
               formData
             );
-            console.log("🚀 ~ AddItem ~ res:", res.data.secure_url);
+
             values.image = res.data.secure_url;
           } catch (error) {
             console.log("🚀 ~ AddItem ~ error:", error);
@@ -85,17 +78,24 @@ const AddItem = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
-              <Button
-                type="button"
-                onClick={() => {
-                  handleClickOpen(), resetForm();
-                }}
-                className="w-[160px]"
-                variant="outlined"
-                startIcon={<AddIcon />}
-              >
-                Add item
-              </Button>
+              <div className="flex md:justify-between justify-evenly   items-center">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    handleClickOpen(), resetForm();
+                  }}
+                  className="w-[160px] h-full"
+                  variant="outlined"
+                  startIcon={<AddIcon />}
+                >
+                  Add item
+                </Button>
+
+                <span className="font-bold text-2xl  text-blue-500">
+                  {" "}
+                  FoodDash
+                </span>
+              </div>
 
               <Dialog
                 open={open}

@@ -38,7 +38,6 @@ const Read = ({ data }: any) => {
   const [items, setItems] = React.useState<AddItemModal>(data);
   const [showFullText, setShowFullText] = useState(false);
 
-  
   const toggleShowMore = () => {
     setShowFullText(!showFullText);
   };
@@ -60,7 +59,7 @@ const Read = ({ data }: any) => {
   };
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card className="container mx-auto" sx={{ maxWidth: 300 }}>
         <CardMedia
           className="h-[200px]"
           component="img"
