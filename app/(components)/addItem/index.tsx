@@ -2,7 +2,7 @@
 
 import AddIcon from "@mui/icons-material/Add";
 import { Formik, FormikHelpers, FormikValues, useFormik } from "formik";
-import { AddItemModal } from "@/app/models/contact.model";
+import { AddItemModal, ImageModal } from "@/app/models/contact.model";
 import { useAddItemMutation } from "@/app/services/contactsApi";
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -55,7 +55,6 @@ const AddItem = () => {
           values: AddItemModal,
           actions: FormikHelpers<AddItemModal>
         ) => {
-          console.log("🚀 ~ AddItem ~ values:", values);
           const { image } = values;
           const formData = new FormData();
 
@@ -186,8 +185,8 @@ const AddItem = () => {
                   <TextField
                     autoFocus
                     required
-                    onChange={(event: React.ChangeEvent) =>
-                      setFieldValue("image", event?.target?.files[0])
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFieldValue("image", event?.target?.files?.[0])
                     }
                     onBlur={handleBlur}
                     value={undefined}

@@ -6,3 +6,8 @@ export interface AddItemModal {
   description: string;
   image: string | null;
 }
+
+
+export interface ImageModal {
+  image: string
+}
