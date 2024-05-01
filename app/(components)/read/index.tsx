@@ -19,6 +19,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddItemModal } from "@/app/models/contact.model";
 
+import CardMedia from "@mui/material/CardMedia";
+
 const bull = (
   <Box
     component="span"
@@ -48,13 +50,30 @@ const Read = ({ data }: any) => {
   };
   return (
     <>
-      <Card className="container" sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {data?.title}
-          </Typography>
+   
 
-          <Typography variant="body2">{data?.description}</Typography>
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="140"
+          image="https://images.unsplash.com/photo-1520209759809-a9bcb6cb3241?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        />
+        <CardContent>
+          <Typography
+            className="flex justify-between"
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            <span className="uppercase"> {data?.title}</span>
+            <div className="uppercase"> price: {data?.price}$</div>
+          </Typography>
+          <span className="uppercase"> {data?.category}</span>
+
+          <Typography className="pt-2" variant="body2" color="text.secondary">
+            {data?.description}
+          </Typography>
         </CardContent>
         <CardActions className="flex justify-between">
           <Button onClick={handleClickOpen} size="small">
@@ -65,6 +84,7 @@ const Read = ({ data }: any) => {
           </Button>
         </CardActions>
       </Card>
+
       <React.Fragment>
         <Dialog
           open={open}
@@ -80,6 +100,7 @@ const Read = ({ data }: any) => {
         >
           <DialogTitle>Update</DialogTitle>
           <DialogContent>
+            title
             <TextField
               autoFocus
               className="w-full"
@@ -92,6 +113,7 @@ const Read = ({ data }: any) => {
               fullWidth
               variant="standard"
             />
+            description
             <TextField
               autoFocus
               className="w-full"
@@ -101,6 +123,33 @@ const Read = ({ data }: any) => {
               placeholder="description"
               name="description"
               type="text"
+              fullWidth
+              variant="filled"
+              maxRows={4}
+            />
+            category
+            <TextField
+              autoFocus
+              className="w-full"
+              value={items?.category}
+              id="category"
+              onChange={handleChange}
+              placeholder="category"
+              name="category"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            price
+            <TextField
+              autoFocus
+              className="w-full"
+              value={items?.price}
+              id="price"
+              onChange={handleChange}
+              placeholder="price"
+              name="price"
+              type="number"
               fullWidth
               variant="standard"
             />

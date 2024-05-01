@@ -21,6 +21,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import * as Yup from "yup";
 
 const initialValues: AddItemModal = {
   title: "",
@@ -28,6 +29,12 @@ const initialValues: AddItemModal = {
   price: null,
   description: "",
 };
+const SignupSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(2, "Too Short!")
+    .max(70, "Too Long!")
+    .required("Required"),
+});
 
 const AddItem = () => {
   const [item, setItem] = useState<any>(initialValues);
@@ -68,64 +75,41 @@ const AddItem = () => {
   //   });
 
   return (
-    <div className="">
-      <Toaster position="top-right" />;
+    <div className=" container mx-auto">
+      <Toaster position="top-right" />
       <Formik
         initialValues={initialValues}
+        validationSchema={SignupSchema}
         onSubmit={async (
           values: AddItemModal,
           actions: FormikHelpers<AddItemModal>
         ) => {
           addItem(values);
           setItem(values);
-          console.log("🚀 ~ AddItem ~ values:sdafafdaf", values);
-
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
         }}
       >
-        {(props) => (
-          // <form
-          //   onSubmit={props.handleSubmit}
-          //   className="grid container mx-auto gap-3"
-          // >
-          //   <TextField
-          //     id="title"
-          //     placeholder="Recipe Title"
-          //     multiline
-          //     onChange={props.handleChange}
-          //     onBlur={props.handleBlur}
-          //     value={props.values.title}
-          //     name="title"
-          //     maxRows={4}
-          //   />
-          //   <TextField
-          //     id="description"
-          //     name="description"
-          //     onChange={props.handleChange}
-          //     onBlur={props.handleBlur}
-          //     value={props.values.description}
-          //     multiline
-          //     placeholder="Ingredients List"
-          //     rows={4}
-          //     variant="filled"
-          //   />
-          //   <Button
-          //     type="submit"
-          //     className="w-[160px]"
-          //     variant="outlined"
-          //     startIcon={<AddIcon />}
-          //   >
-          //     Add item
-          //   </Button>
-          // </form>
-
-          <form onSubmit={props.handleSubmit}>
+        {({
+          values,
+          touched,
+          errors,
+          resetForm,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          handleReset,
+        }) => (
+          <form onSubmit={handleSubmit}>
             <React.Fragment>
-              <Button variant="outlined" onClick={handleClickOpen}>
-                Open form dialog
+              <Button
+                type="button"
+                onClick={() => {
+                  handleClickOpen(), resetForm();
+                }}
+                className="w-[160px]"
+                variant="outlined"
+                startIcon={<AddIcon />}
+              >
+                Add item
               </Button>
               <Dialog
                 open={open}
@@ -152,10 +136,9 @@ const AddItem = () => {
                   </DialogContentText>
                   <TextField
                     autoFocus
-                    required
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props?.values?.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values?.title}
                     margin="dense"
                     id="title"
                     name="title"
@@ -164,12 +147,15 @@ const AddItem = () => {
                     fullWidth
                     variant="standard"
                   />
+                  {errors.title && errors.title ? (
+                    <div>{errors.title}</div>
+                  ) : null}
                   <TextField
                     autoFocus
                     required
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props?.values?.description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values?.description}
                     margin="dense"
                     id="description"
                     name="description"
@@ -181,9 +167,9 @@ const AddItem = () => {
                   <TextField
                     autoFocus
                     required
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props?.values?.category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values?.category}
                     margin="dense"
                     id="category"
                     name="category"
@@ -195,14 +181,14 @@ const AddItem = () => {
                   <TextField
                     autoFocus
                     required
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props?.values?.price}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values?.price}
                     margin="dense"
                     id="price"
                     name="price"
                     placeholder="price "
-                    type="text"
+                    type="number"
                     fullWidth
                     variant="standard"
                   />{" "}
