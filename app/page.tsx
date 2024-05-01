@@ -8,11 +8,7 @@ import AddItem from "./(components)/addItem";
 
 export default function Home() {
   const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
-  console.log("🚀 ~ Home ~ data:", data);
-  const [form, setFrom] = useState({
-    title: "",
-    dec: "",
-  });
+  // console.log("🚀 ~ Home ~ data:", data);
 
   return (
     <main className="">

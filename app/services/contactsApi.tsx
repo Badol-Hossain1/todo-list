@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Items } from "../models/contact.model";
+import { AddItemModal } from "../models/contact.model";
 
 export const contactsApi = createApi({
   reducerPath: "contactsApi",
@@ -8,14 +8,14 @@ export const contactsApi = createApi({
   }),
   tagTypes: ["Item"],
   endpoints: (builder) => ({
-    getItems: builder.query<Items[], void>({
+    getItems: builder.query<AddItemModal[], void>({
       query: () => "/Crud",
       providesTags: ["Item"],
     }),
-    item: builder.query<Items, string>({
+    item: builder.query<AddItemModal, string>({
       query: (id) => `/Crud/${id}`,
     }),
-    addItem: builder.mutation<void, Items>({
+    addItem: builder.mutation<void, AddItemModal>({
       query: (item) => ({
         url: "/Crud",
         method: "POST",
@@ -23,7 +23,7 @@ export const contactsApi = createApi({
       }),
       invalidatesTags: ["Item"],
     }),
-    updateItem: builder.mutation<void, Items>({
+    updateItem: builder.mutation<void, AddItemModal>({
       query: ({ id, ...rest }) => ({
         url: `/Crud/${id}`,
         method: "PUT",
