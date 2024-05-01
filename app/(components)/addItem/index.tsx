@@ -41,7 +41,7 @@ const SignupSchema = Yup.object().shape({
 
 const AddItem = () => {
   const [item, setItem] = useState<any>(initialValues);
-  console.log("🚀 ~ AddItem ~ item:", item);
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -92,7 +92,6 @@ const AddItem = () => {
                 Add item
               </Button>
 
-             
               <Dialog
                 open={open}
                 onClose={handleClose}
@@ -100,12 +99,7 @@ const AddItem = () => {
                   component: "form",
                   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                     event.preventDefault();
-                    const formData = new FormData(event.currentTarget);
-                    const formJson = Object.fromEntries(
-                      (formData as any).entries()
-                    );
-                    const email = formJson.email;
-                    console.log(email);
+
                     handleClose();
                   },
                 }}

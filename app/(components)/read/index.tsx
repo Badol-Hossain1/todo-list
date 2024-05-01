@@ -14,8 +14,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddItemModal } from "@/app/models/contact.model";
 
@@ -42,8 +40,6 @@ const Read = ({ data }: any) => {
   const isAnyFieldEmpty = Object.values(items).some(
     (val) => String(val).trim() === ""
   );
-
-  const isDisabled = isAnyFieldEmpty;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -169,7 +165,7 @@ const Read = ({ data }: any) => {
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
             <Button
-              disabled={isDisabled}
+              disabled={isAnyFieldEmpty}
               onClick={() => updateItem(items)}
               type="submit"
             >
