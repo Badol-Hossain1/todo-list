@@ -1,18 +1,9 @@
 "use client";
-// import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+
 import AddIcon from "@mui/icons-material/Add";
 import { Formik, FormikHelpers, FormikValues, useFormik } from "formik";
-
 import { AddItemModal } from "@/app/models/contact.model";
-import {
-  useAddItemMutation,
-  useGetItemsQuery,
-} from "@/app/services/contactsApi";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { title } from "process";
-import { Toaster } from "sonner";
+import { useAddItemMutation } from "@/app/services/contactsApi";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -22,12 +13,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as Yup from "yup";
+import { toast } from "sonner";
+import axios from "axios";
 
 const initialValues: AddItemModal = {
   title: "",
   category: "",
   price: null,
   description: "",
+  image: "",
 };
 const TodoSchema = Yup.object().shape({
   title: Yup.string().min(2, "Too Short!").max(70, "Too Long!").required(),
@@ -54,7 +48,6 @@ const AddItem = () => {
 
   return (
     <div className=" container mx-auto">
-      <Toaster position="top-right" />
       <Formik
         initialValues={initialValues}
         validationSchema={TodoSchema}
@@ -62,7 +55,24 @@ const AddItem = () => {
           values: AddItemModal,
           actions: FormikHelpers<AddItemModal>
         ) => {
+          console.log("🚀 ~ AddItem ~ values:", values);
+          const { image } = values;
+          const formData = new FormData();
+
+          try {
+            formData.append("file", image);
+            formData.append("upload_preset", "nrxeyjoa");
+            const res = await axios.post(
+              `https://api.cloudinary.com/v1_1/dgwwyemfa/image/upload`,
+              formData
+            );
+            console.log("🚀 ~ AddItem ~ res:", res.data.secure_url);
+            values.image = res.data.secure_url;
+          } catch (error) {
+            console.log("🚀 ~ AddItem ~ error:", error);
+          }
           await addItem(values);
+          toast.success("success ");
         }}
       >
         {({
@@ -72,6 +82,7 @@ const AddItem = () => {
           handleBlur,
           handleChange,
           handleSubmit,
+          setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
@@ -172,6 +183,22 @@ const AddItem = () => {
                   {errors.price && errors.price ? (
                     <div>{errors.price}</div>
                   ) : null}
+                  <TextField
+                    autoFocus
+                    required
+                    onChange={(event: React.ChangeEvent) =>
+                      setFieldValue("image", event?.target?.files[0])
+                    }
+                    onBlur={handleBlur}
+                    value={undefined}
+                    margin="dense"
+                    id="image"
+                    name="image"
+                    placeholder="upload image"
+                    type="file"
+                    fullWidth
+                    variant="standard"
+                  />{" "}
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>

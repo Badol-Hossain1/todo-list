@@ -7,6 +7,7 @@ import { useGetItemsQuery, useItemQuery } from "./services/contactsApi";
 import AddItem from "./(components)/addItem";
 import { Button, TextField } from "@mui/material";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { Toaster } from "sonner";
 
 export default function Home() {
   const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
@@ -31,6 +32,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto">
+      <Toaster richColors />
       <h1 className="text-center text-4xl font-bold">Todo list</h1>
       {isLoading && (
         <h1 className="text-center text-4xl font-bold">...Loading</h1>
@@ -45,7 +47,7 @@ export default function Home() {
       <AddItem />
       <br />
 
-      <div className="flex  gap-4 items-center">
+      <div className="md:flex  gap-4 items-center">
         <select
           className="border px-4 py-3"
           value={selectedCategory}
@@ -72,17 +74,6 @@ export default function Home() {
           fullWidth
           variant="standard"
         />
-        <Button
-          type="button"
-          onClick={() => {
-            handleSearch();
-          }}
-          className="w-[160px]"
-          variant="outlined"
-          startIcon={<PersonSearchIcon />}
-        >
-          Search
-        </Button>
       </div>
 
       {isSuccess && (

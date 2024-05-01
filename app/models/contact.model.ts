@@ -4,4 +4,5 @@ export interface AddItemModal {
   category: string;
   price: number | null;
   description: string;
+  image: string | null;
 }

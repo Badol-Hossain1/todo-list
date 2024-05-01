@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,10 +15,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import "react-toastify/dist/ReactToastify.css";
 import { AddItemModal } from "@/app/models/contact.model";
 
 import CardMedia from "@mui/material/CardMedia";
+import axios from "axios";
+import { useFormikContext } from "formik";
+import { useState } from "react";
 
 const bull = (
   <Box
@@ -33,10 +36,17 @@ const Read = ({ data }: any) => {
   const [updateItem] = useUpdateItemMutation();
   const [open, setOpen] = React.useState(false);
   const [items, setItems] = React.useState<AddItemModal>(data);
+  const [showFullText, setShowFullText] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  
+  const toggleShowMore = () => {
+    setShowFullText(!showFullText);
+  };
+
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setItems({ ...items, [e.target.name]: e.target.value });
   };
+
   const isAnyFieldEmpty = Object.values(items).some(
     (val) => String(val).trim() === ""
   );
@@ -52,10 +62,11 @@ const Read = ({ data }: any) => {
     <>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
+          className="h-[200px]"
           component="img"
           alt="green iguana"
           height="140"
-          image="https://images.unsplash.com/photo-1520209759809-a9bcb6cb3241?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          image={data?.image}
         />
         <CardContent>
           <Typography
@@ -69,19 +80,22 @@ const Read = ({ data }: any) => {
           </Typography>
           <span className="uppercase"> {data?.category}</span>
 
-          {data?.description && data.description.length > 100 ? (
-            <Typography
-              className="pt-2 h-[200px] overflow-y-scroll scrollbar-hide"
-              variant="body2"
-              color="text.secondary"
-            >
-              {data.description}
-            </Typography>
-          ) : (
-            <Typography className="pt-2" variant="body2" color="text.secondary">
-              {data.description}
-            </Typography>
-          )}
+          <Typography
+            className="pt-2 h-[70px] overflow-y-scroll scrollbar-hide"
+            variant="body2"
+            color="text.secondary"
+          >
+            {showFullText ? data.description : data.description.slice(0, 100)}
+            {!showFullText && data.description.length > 100 && (
+              <span
+                onClick={toggleShowMore}
+                style={{ cursor: "pointer", color: "blue" }}
+              >
+                {" "}
+                Show more
+              </span>
+            )}
+          </Typography>
         </CardContent>
         <CardActions className="flex justify-between">
           <Button onClick={handleClickOpen} size="small">
@@ -124,7 +138,7 @@ const Read = ({ data }: any) => {
             description
             <TextField
               autoFocus
-              className="w-full"
+              className="w-full "
               value={items?.description}
               id="name"
               onChange={handleChange}
