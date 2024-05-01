@@ -29,7 +29,7 @@ const initialValues: AddItemModal = {
   price: null,
   description: "",
 };
-const SignupSchema = Yup.object().shape({
+const TodoSchema = Yup.object().shape({
   title: Yup.string().min(2, "Too Short!").max(70, "Too Long!").required(),
   category: Yup.string().min(3, "Too Short!").max(20, "Too Long!").required(),
   description: Yup.string()
@@ -40,8 +40,6 @@ const SignupSchema = Yup.object().shape({
 });
 
 const AddItem = () => {
-  const [item, setItem] = useState<any>(initialValues);
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -59,24 +57,21 @@ const AddItem = () => {
       <Toaster position="top-right" />
       <Formik
         initialValues={initialValues}
-        validationSchema={SignupSchema}
+        validationSchema={TodoSchema}
         onSubmit={async (
           values: AddItemModal,
           actions: FormikHelpers<AddItemModal>
         ) => {
-          addItem(values);
-          setItem(values);
+          await addItem(values);
         }}
       >
         {({
           values,
-          touched,
           errors,
           resetForm,
           handleBlur,
           handleChange,
           handleSubmit,
-          handleReset,
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
@@ -99,7 +94,6 @@ const AddItem = () => {
                   component: "form",
                   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                     event.preventDefault();
-
                     handleClose();
                   },
                 }}
