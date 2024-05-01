@@ -6,11 +6,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { useGetItemsQuery, useItemQuery } from "./services/contactsApi";
 import AddItem from "./(components)/addItem";
 import { Button, TextField } from "@mui/material";
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 
 export default function Home() {
   const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleCategoryChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -21,6 +22,12 @@ export default function Home() {
   const filteredData = selectedCategory
     ? data?.filter((item) => item.category === selectedCategory)
     : data;
+
+  const handleSearch = () => {
+    return data?.filter((item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   return (
     <main className="container mx-auto">
@@ -58,6 +65,7 @@ export default function Home() {
           autoFocus
           className="w-full"
           id="name"
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search Here"
           name="title"
           type="text"
@@ -66,6 +74,9 @@ export default function Home() {
         />
         <Button
           type="button"
+          onClick={() => {
+            handleSearch();
+          }}
           className="w-[160px]"
           variant="outlined"
           startIcon={<PersonSearchIcon />}
@@ -77,11 +88,17 @@ export default function Home() {
       {isSuccess && (
         <div className="container mt-6 mx-auto grid md:grid-cols-3 lg:grid-cols-4 gap-3">
           {filteredData &&
-            filteredData.map((item) => (
-              <div key={item.id}>
-                <Read key={item.id} data={item} />
-              </div>
-            ))}
+            filteredData
+              .filter((item) => {
+                return searchQuery.toLowerCase() === ""
+                  ? item
+                  : item.title.toLowerCase().includes(searchQuery);
+              })
+              .map((item) => (
+                <div key={item.id}>
+                  <Read key={item.id} data={item} />
+                </div>
+              ))}
         </div>
       )}
     </main>

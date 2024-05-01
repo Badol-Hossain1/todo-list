@@ -39,6 +39,11 @@ const Read = ({ data }: any) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItems({ ...items, [e.target.name]: e.target.value });
   };
+  const isAnyFieldEmpty = Object.values(items).some(
+    (val) => String(val).trim() === ""
+  );
+
+  const isDisabled = isAnyFieldEmpty;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -163,7 +168,11 @@ const Read = ({ data }: any) => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={() => updateItem(items)} type="submit">
+            <Button
+              disabled={isDisabled}
+              onClick={() => updateItem(items)}
+              type="submit"
+            >
               Update
             </Button>
           </DialogActions>
