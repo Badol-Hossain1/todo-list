@@ -16,7 +16,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { toast } from "sonner";
 import axios from "axios";
 import { TodoSchema } from "../schemas";
-import Image from "next/image";
+
 import { MoonLoader } from "react-spinners";
 
 const initialValues: AddItemModal = {
@@ -87,6 +87,7 @@ const AddItem = () => {
           handleChange,
           handleSubmit,
           setFieldValue,
+          isValid,
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
@@ -213,7 +214,9 @@ const AddItem = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button type="submit">Create</Button>
+                  <Button disabled={!isValid} type="submit">
+                    Create
+                  </Button>
                 </DialogActions>
               </Dialog>
             </React.Fragment>
