@@ -91,20 +91,20 @@ const AddItem = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
-              <div className="flex md:justify-between justify-evenly   items-center">
+              <div className="flex w-[88%] xl:container mx-auto md:justify-between justify-evenly   items-center">
                 <Button
                   type="button"
                   onClick={() => {
                     handleClickOpen(), resetForm();
                   }}
-                  className="w-[160px] h-full"
+                  className="md:w-[160px] h-full"
                   variant="outlined"
                   startIcon={<AddIcon />}
                 >
                   Add item
                 </Button>
 
-                <span className="font-bold text-2xl  text-blue-500">
+                <span className="font-bold md:text-2xl  text-blue-500">
                   {" "}
                   FoodDash
                 </span>

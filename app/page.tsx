@@ -26,7 +26,7 @@ export default function Home() {
     : data;
 
   return (
-    <main className=" w-full mt-12 md:container  xl:w-full mx-auto">
+    <main className="  mt-12 ">
       <Toaster richColors />
 
       {isLoading && (
@@ -42,7 +42,7 @@ export default function Home() {
       <AddItem />
       <br />
 
-      <div className="grid">
+      <div className="grid w-[88%] xl:w-full xl:container mx-auto">
         <div className="flex justify-around md:justify-between">
           <select
             className="border px-4 text-xs py-3"
@@ -59,7 +59,7 @@ export default function Home() {
                 )
               )}
           </select>
-          <div className="font-bold text-2xl  text-blue-500">
+          <div className="font-bold md:text-2xl  text-blue-500">
             total item {data?.length}
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function Home() {
       </div>
 
       {isSuccess && (
-        <div className="container mt-6 mx-auto grid md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="xl:container w-[90%] xl:w-full mt-6 mx-auto grid md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredData &&
             filteredData
               .filter((item) => {
