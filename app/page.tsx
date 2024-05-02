@@ -77,7 +77,7 @@ export default function Home() {
         </div>
       </div> */}
 
-      <div className="flex md:justify-between  justify-center gap-4   items-center">
+      <div className="flex md:justify-stretch   justify-center gap-4   items-center">
         <select
           className="border px-4 text-xs py-3"
           value={selectedCategory}
@@ -93,11 +93,11 @@ export default function Home() {
               )
             )}
         </select>
-        <span className="font-bold text-2xl  text-blue-500">
+        <span className="font-bold w-full text-2xl  text-blue-500">
           {" "}
           <TextField
             autoFocus
-            className=""
+            className="w-full"
             id="name"
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search Here"

@@ -21,6 +21,7 @@ import CardMedia from "@mui/material/CardMedia";
 import axios from "axios";
 import { useFormikContext } from "formik";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const bull = (
   <Box
@@ -40,6 +41,19 @@ const Read = ({ data }: any) => {
 
   const toggleShowMore = () => {
     setShowFullText(!showFullText);
+  };
+
+  // update data
+  const handleUpdateItem = async () => {
+    await updateItem(items);
+    toast.success("Item updated successfully!"); // Show toast message
+    handleClose();
+  };
+  // delete
+
+  const handleDeleteItem = async () => {
+    await deleteItem(data?.id);
+    toast.error("Item deleted successfully!"); // Show error toast message
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +114,7 @@ const Read = ({ data }: any) => {
           <Button onClick={handleClickOpen} size="small">
             Edit
           </Button>
-          <Button onClick={() => deleteItem(data?.id)} size="small">
+          <Button onClick={handleDeleteItem} size="small">
             Delete
           </Button>
         </CardActions>
@@ -179,7 +193,7 @@ const Read = ({ data }: any) => {
             <Button onClick={handleClose}>Cancel</Button>
             <Button
               disabled={isAnyFieldEmpty}
-              onClick={() => updateItem(items)}
+              onClick={handleUpdateItem}
               type="submit"
             >
               Update

@@ -64,7 +64,7 @@ const AddItem = () => {
             console.log("🚀 ~ AddItem ~ error:", error);
           }
           await addItem(values);
-          toast.success("success ");
+          toast.success("create data successfully ");
         }}
       >
         {({
