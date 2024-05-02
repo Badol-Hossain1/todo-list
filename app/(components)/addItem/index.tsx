@@ -48,7 +48,7 @@ const AddItem = () => {
           values: AddItemModal,
           actions: FormikHelpers<AddItemModal>
         ) => {
-          const { image } = values;
+          const { image }: any = values;
           const formData = new FormData();
 
           try {
