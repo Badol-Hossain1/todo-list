@@ -13,6 +13,7 @@ export default function Home() {
   const { data, error, isLoading, isFetching, isSuccess } = useGetItemsQuery();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  console.log("🚀 ~ Home ~ searchQuery:", searchQuery);
 
   const handleCategoryChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -99,7 +100,7 @@ export default function Home() {
             autoFocus
             className="w-full"
             id="name"
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())} 
             placeholder="Search Here"
             name="title"
             type="text"
