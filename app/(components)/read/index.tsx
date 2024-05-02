@@ -89,10 +89,7 @@ const Read = ({ data }: any) => {
 
   return (
     <>
-      <Card
-        className="w-[90%] xl:w-full xl:container  mx-auto"
-        sx={{ maxWidth: 300 }}
-      >
+      <Card className="container w-full   mx-auto">
         <CardMedia
           className="h-[200px]"
           component="img"

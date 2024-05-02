@@ -26,7 +26,7 @@ export default function Home() {
     : data;
 
   return (
-    <main className="  mt-12 ">
+    <main className="w-[90%] mx-auto  mt-12 ">
       <Toaster richColors />
 
       {isLoading && (
@@ -42,8 +42,8 @@ export default function Home() {
       <AddItem />
       <br />
 
-      <div className="grid w-[88%] xl:w-full xl:container mx-auto">
-        <div className="flex justify-around md:justify-between">
+      <div className="grid w-full ">
+        <div className="flex justify-between">
           <select
             className="border px-4 text-xs py-3"
             value={selectedCategory}
@@ -63,7 +63,7 @@ export default function Home() {
             total item {data?.length}
           </div>
         </div>
-        <span className="font-bold w-[90%] md:w-full mx-auto mt-4 text-2xl  text-blue-500">
+        <span className="font-bold w-full mx-auto mt-4 text-2xl  text-blue-500">
           {" "}
           <TextField
             autoFocus
@@ -83,7 +83,7 @@ export default function Home() {
       </div>
 
       {isSuccess && (
-        <div className="xl:container w-[90%] xl:w-full mt-6 mx-auto grid md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className=" w-full mt-6   grid md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredData &&
             filteredData
               .filter((item) => {

@@ -91,7 +91,7 @@ const AddItem = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <React.Fragment>
-              <div className="flex w-[88%] xl:container mx-auto md:justify-between justify-evenly   items-center">
+              <div className="flex  justify-between    items-center">
                 <Button
                   type="button"
                   onClick={() => {
