@@ -38,6 +38,21 @@ const Read = ({ data }: any) => {
   const [open, setOpen] = React.useState(false);
   const [items, setItems] = React.useState<AddItemModal>(data);
   const [showFullText, setShowFullText] = useState(false);
+  const [category, setCategory] = React.useState("");
+  const [title, setTitle] = React.useState<string>("");
+
+  const handleChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>,
+    maxLength: number
+  ) => {
+    const inputValue = e.target.value;
+    // Check if input length exceeds the maxLength
+    if (inputValue.length <= maxLength) {
+      setState(inputValue);
+      handleChange(e); // Update the state of the input field in the items object
+    }
+  };
 
   const toggleShowMore = () => {
     setShowFullText(!showFullText);
@@ -71,6 +86,7 @@ const Read = ({ data }: any) => {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <Card className="container mx-auto" sx={{ maxWidth: 300 }}>
@@ -145,8 +161,16 @@ const Read = ({ data }: any) => {
               placeholder="title"
               name="title"
               type="text"
-              onChange={handleChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChangeInput(e, setTitle, 20)
+              }
               fullWidth
+              error={title.length > 20} // Show error if length exceeds 10 characters
+              helperText={
+                title.length > 20
+                  ? "title must be at most 10 characters long"
+                  : ""
+              }
               variant="standard"
             />
             description
@@ -169,11 +193,19 @@ const Read = ({ data }: any) => {
               className="w-full"
               value={items?.category}
               id="category"
-              onChange={handleChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChangeInput(e, setCategory, 20)
+              }
               placeholder="category"
               name="category"
               type="text"
               fullWidth
+              error={category.length > 20} // Show error if length exceeds 10 characters
+              helperText={
+                category.length > 20
+                  ? "Category must be at most 10 characters long"
+                  : ""
+              }
               variant="standard"
             />
             price
