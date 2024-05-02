@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { TodoSchema } from "../schemas";
 import Image from "next/image";
+import { MoonLoader } from "react-spinners";
 
 const initialValues: AddItemModal = {
   title: "",
@@ -28,6 +29,7 @@ const initialValues: AddItemModal = {
 
 const AddItem = () => {
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,6 +43,14 @@ const AddItem = () => {
 
   return (
     <div className="w-full">
+      {loading && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-300 bg-opacity-75 z-50">
+          <div className="text-center">
+            <MoonLoader color="#36d7b7" />
+          </div>
+        </div>
+      )}
+
       <Formik
         initialValues={initialValues}
         validationSchema={TodoSchema}
@@ -50,6 +60,7 @@ const AddItem = () => {
         ) => {
           const { image }: any = values;
           const formData = new FormData();
+          setLoading(true);
 
           try {
             formData.append("file", image);
@@ -64,6 +75,7 @@ const AddItem = () => {
             console.log("🚀 ~ AddItem ~ error:", error);
           }
           await addItem(values);
+          setLoading(false);
           toast.success("create data successfully ");
         }}
       >

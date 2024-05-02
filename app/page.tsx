@@ -42,10 +42,10 @@ export default function Home() {
       <AddItem />
       <br />
 
-      {/* <div className="flex flex-wrap px-4 w-full  container mx-auto gap-4 md:items-center">
-        <div>
+      <div className="grid">
+        <div className="flex justify-around md:justify-between">
           <select
-            className="border  md:px-4 text-xs md:py-3"
+            className="border px-4 text-xs py-3"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -59,48 +59,17 @@ export default function Home() {
                 )
               )}
           </select>
+          <div className="font-bold text-2xl  text-blue-500">
+            total item {data?.length}
+          </div>
         </div>
-        <div>
-          <TextField
-            autoFocus
-            className=""
-            id="name"
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search Here"
-            name="title"
-            type="text"
-            fullWidth
-            variant="standard"
-            InputProps={{
-              endAdornment: <PersonSearchIcon />,
-            }}
-          />
-        </div>
-      </div> */}
-
-      <div className="flex md:justify-stretch   justify-center gap-4   items-center">
-        <select
-          className="border px-4 text-xs py-3"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="">All Categories</option>
-          {data &&
-            Array.from(new Set(data.map((item) => item.category))).map(
-              (category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              )
-            )}
-        </select>
-        <span className="font-bold w-full text-2xl  text-blue-500">
+        <span className="font-bold w-[90%] md:w-full mx-auto mt-4 text-2xl  text-blue-500">
           {" "}
           <TextField
             autoFocus
-            className="w-full"
+            className="md:w-full "
             id="name"
-            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())} 
+            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
             placeholder="Search Here"
             name="title"
             type="text"
