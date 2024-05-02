@@ -83,13 +83,14 @@ const Read = ({ data }: any) => {
         />
         <CardContent>
           <Typography
-            className="flex justify-between"
+            className="flex flex-col  justify-between"
             gutterBottom
             variant="h5"
             component="div"
           >
-            <span className="uppercase"> {data?.title}</span>
-            <div className="uppercase"> price: {data?.price}$</div>
+            <span className="uppercase text-xl"> {data?.title}</span>
+
+            <div className="uppercase text-xl mt-2"> price: {data?.price}$</div>
           </Typography>
           <span className="uppercase"> {data?.category}</span>
 
