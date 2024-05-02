@@ -25,7 +25,7 @@ export default function Home() {
     : data;
 
   return (
-    <main className=" w-full mt-12 container  xl:w-full mx-auto">
+    <main className=" w-full mt-12 md:container  xl:w-full mx-auto">
       <Toaster richColors />
 
       {isLoading && (
@@ -41,9 +41,45 @@ export default function Home() {
       <AddItem />
       <br />
 
-      <div className="flex justify-around w-full container mx-auto gap-4 md:items-center">
+      {/* <div className="flex flex-wrap px-4 w-full  container mx-auto gap-4 md:items-center">
+        <div>
+          <select
+            className="border  md:px-4 text-xs md:py-3"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="">All Categories</option>
+            {data &&
+              Array.from(new Set(data.map((item) => item.category))).map(
+                (category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                )
+              )}
+          </select>
+        </div>
+        <div>
+          <TextField
+            autoFocus
+            className=""
+            id="name"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Here"
+            name="title"
+            type="text"
+            fullWidth
+            variant="standard"
+            InputProps={{
+              endAdornment: <PersonSearchIcon />,
+            }}
+          />
+        </div>
+      </div> */}
+
+      <div className="flex md:justify-between  justify-center gap-4   items-center">
         <select
-          className="border md:px-4 text-xs md:py-3"
+          className="border px-4 text-xs py-3"
           value={selectedCategory}
           onChange={handleCategoryChange}
         >
@@ -57,23 +93,23 @@ export default function Home() {
               )
             )}
         </select>
-        <TextField
-          autoFocus
-          id="name"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search Here"
-          name="title"
-          type="text"
-          fullWidth
-          variant="standard"
-          InputProps={{
-            endAdornment: (
-              <PersonSearchIcon
-                style={{ marginLeft: "-35px", marginRight: "5px" }}
-              />
-            ),
-          }}
-        />
+        <span className="font-bold text-2xl  text-blue-500">
+          {" "}
+          <TextField
+            autoFocus
+            className=""
+            id="name"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Here"
+            name="title"
+            type="text"
+            fullWidth
+            variant="standard"
+            InputProps={{
+              endAdornment: <PersonSearchIcon />,
+            }}
+          />
+        </span>
       </div>
 
       {isSuccess && (

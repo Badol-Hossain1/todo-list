@@ -4,10 +4,9 @@ export interface AddItemModal {
   category: string;
   price: number | null;
   description: string;
-  image: string | null;
+  image?: string | null;
 }
 
-
 export interface ImageModal {
-  image: string
+  image: string;
 }
